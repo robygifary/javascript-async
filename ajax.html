@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax</title>
+  </head>
+  <body>
+    <h1 id="response"></h1>
+
+    <script>
+      // XMLHttpRequest() = Untuk membuat AJAX, kita bisa menggunakan class XMLHttpRequest
+      const ajax = new XMLHttpRequest();
+      ajax.open('GET', 'http://127.0.0.1:5500/api/hello.json');
+      // ajax.onload = callback; // menggunakan onload // bisa juga menggunakan addEventListener
+      // Untuk menambahkan AJAX Callback, kita bisa tambahkan pada event load
+      ajax.addEventListener('load', function () {
+        // Dan untuk mengambil datanya dari server, kita bisa menggunakan property responseText
+        const json = JSON.parse(ajax.responseText);
+
+        const header = document.getElementById('response');
+        header.textContent = json.response;
+      });
+      ajax.send();
+    </script>
+  </body>
+</html>

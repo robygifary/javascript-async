@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fecth API</title>
+  </head>
+  <body>
+    <form>
+      <label for="username"
+        >Username :
+        <input type="text" id="username" name="username" />
+      </label>
+      <br />
+      <label for="password"
+        >Password :
+        <input type="password" id="password" name="password" />
+      </label>
+      <br />
+      <input type="button" value="login" id="login" />
+    </form>
+    <h1 id="response"></h1>
+    <script>
+      /*
+        Saat kita akan mengirim request menggunakan Fetch API, kita perlu membuat object Request
+        Hal ini menjadi lebih rapi dibandingkan menggunakan AJAX
+        Kita bisa membuat object Request, lalu dikirim menggunakan Fetch API
+        Dan saat membuat Request, kita bisa menentukan data yang ingin kita kirim
+        */
+      /* Saat kita akan mengirim request menggunakan Fetch API, kita perlu membuat object Request
+           Hal ini menjadi lebih rapi dibandingkan menggunakan AJAX
+           Kita bisa membuat object Request, lalu dikirim menggunakan Fetch API
+           Dan saat membuat Request, kita bisa menentukan data yang ingin kita kirim
+       */
+      function doLogin() {
+        // kode : membuat Request
+        const request = new Request('https://syakirname.free.beeceptor.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value,
+          }),
+        });
+
+        /*
+        Hasil dari Fetch API adalah sebuah Promise
+        Promise tersebut berisikan object Response
+        Ada banyak property dan method pada object Response, kita bisa menggunakannya sesuai dengan yang kita butuhkan
+        */
+        // kode: Promise <Response>
+        const response = fetch(request);
+
+        response
+          .then((response) => response.json())
+          .then(function (json) {
+            document.getElementById('response').textContent = json.success;
+          })
+          .catch(function (error) {
+            document.getElementById('response').textContent = error;
+          });
+      }
+
+      document.getElementById('login').onclick = doLogin;
+    </script>
+  </body>
+</html>

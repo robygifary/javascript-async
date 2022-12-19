@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slow</title>
+  </head>
+  <body>
+    <button id="buttonTask">Click Me</button>
+
+    <script>
+      /*
+        JavaScript adalah Single Thread (Single Proses), artinya walaupun proses yang kita buat adalah Async, tapi tetap akan dijalankan dalam Thread (Proses) yang sama.
+        Kemampuan satu Thread dalam mengelola beberapa pekerjaan, dinamakan Concurrent.
+        Kemampuan menjalankan beberapa Thread untuk mengelola satu atau lebih pekerjaan, dinamakan Paralel. 
+        Dan untuk membuat proses secara Paralel, kita bisa menggunakan Web Worker
+        */
+      // kode proses lambat
+      function slowLog(total) {
+        for (let i = 0; i < total; i++) {
+          console.info(i);
+        }
+      }
+
+      document.getElementById('buttonTask').onclick = function () {
+        console.info('Start');
+        slowLog(100000);
+        console.info('End');
+      };
+    </script>
+  </body>
+</html>

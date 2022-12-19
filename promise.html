@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise</title>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td>Id :</td>
+          <td id="id"></td>
+        </tr>
+        <tr>
+          <td>Name :</td>
+          <td id="name"></td>
+        </tr>
+        <tr>
+          <td>Price :</td>
+          <td id="price"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      /*
+      apa itu promise ?
+      Promise merupakan proxy untuk sebuah nilai di masa depan (Future) yang belum diketahui saat pembuatan Promise tersebut.
+      Biasa Promise digunakan sebagai proxy untuk proses Async.
+      Penggunaan Promise sangat mudah, dan lebih mirip dengan kode Synchronous.
+      */
+      function getProduct(product) {
+        return new Promise(function (resolve, reject) {
+          const ajax = new XMLHttpRequest();
+          ajax.open('GET', `api/${product}.json`);
+          ajax.onload = function () {
+            if (ajax.status === 200) {
+              resolve(ajax.responseText);
+            } else {
+              reject(`Error get product with response : ${ajax.status}`);
+            }
+          };
+          ajax.send();
+        });
+      }
+
+      getProduct('product')
+        .then(function (response) {
+          return JSON.parse(response);
+        })
+        // .then() = untuk mendapatkan atau mengubah data ketika promise sukses
+        .then(function (json) {
+          document.getElementById('id').textContent = json.id;
+          document.getElementById('name').textContent = json.name;
+          document.getElementById('price').textContent = json.price;
+        })
+        // .catch() = untuk mendapatkan data ketika promise gagal
+        .catch(function (error) {
+          document.getElementById('id').textContent = Error;
+          document.getElementById('name').textContent = Error;
+          document.getElementById('price').textContent = Error;
+        })
+        // finally() = akan dieksekusi ketika terjadi sukses atau gagal pada Promise
+        .finally(function () {
+          console.info('finally');
+        });
+    </script>
+  </body>
+</html>

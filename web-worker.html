@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Worker</title>
+  </head>
+  <body>
+    <button id="buttonTask">Click Me</button>
+
+    <script>
+      /*
+      Web Worker adalah kemampuan yang untuk menjalankan proses di Thread yang berbeda dibanding Main Thread. 
+      Keuntungan menggunakan Web Worker adalah, jika terdapat proses yang membutuhkan waktu lama, Web kita tidak akan Freeze, karena proses tersebut bisa kita jalankan di Thread yang berbeda dari Main Thread (yang biasa digunakan oleh UI)
+      */
+      const worker = new Worker('worker.js');
+      worker.addEventListener('message', function (message) {
+        console.info(message.data);
+      });
+
+      document.getElementById('buttonTask').onclick = function () {
+        worker.postMessage(100000);
+      };
+    </script>
+  </body>
+</html>
